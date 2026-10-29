@@ -84,7 +84,16 @@ const routes = {
   'GET /api/evidence': async (req, res) => {
     const file = path.join(EVAL_DIR, 'results', 'summary.json')
     if (!fs.existsSync(file)) return json(res, 200, { available: false })
-    json(res, 200, { available: true, ...JSON.parse(fs.readFileSync(file, 'utf8')) })
+    const ev = JSON.parse(fs.readFileSync(file, 'utf8'))
+    // Show the light on-device configuration as a column next to the default.
+    const lightFile = path.join(EVAL_DIR, 'results', 'summary-light.json')
+    if (fs.existsSync(lightFile)) {
+      const light = JSON.parse(fs.readFileSync(lightFile, 'utf8'))
+      ev.backends = ['local', 'light', 'cloud']
+      ev.backendLabels.light = 'Light option on device (Qwen3.5-2B)'
+      for (const m of ev.metrics) m.values.light = light.metrics.find(x => x.key === m.key)?.values.local ?? null
+    }
+    json(res, 200, { available: true, ...ev })
   },
 
   'POST /api/ask': async (req, res) => {

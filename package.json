@@ -17,6 +17,7 @@
     "setup": "node scripts/setup.js",
     "start": "node src/server.js",
     "ask": "node scripts/ask.js",
-    "eval": "node eval/run.js"
+    "eval": "node eval/run.js",
+    "report": "node eval/report.js"
   }
 }

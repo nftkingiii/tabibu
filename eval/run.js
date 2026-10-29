@@ -16,6 +16,8 @@ import { memorySnapshot } from '../src/memory.js'
 const arg = name => process.argv.find(a => a.startsWith(`--${name}=`))?.split('=')[1]
 const backends = (arg('backend') || 'local') === 'both' ? ['local', 'cloud'] : [arg('backend') || 'local']
 const only = arg('only')
+// --tag=light keeps a second on-device configuration's results separate.
+const tag = arg('tag') ? `-${arg('tag')}` : ''
 const RESULTS = path.join(EVAL_DIR, 'results')
 fs.mkdirSync(RESULTS, { recursive: true })
 
@@ -68,7 +70,7 @@ async function runBackend (backend) {
     peakMb: backend === 'local' ? peakMb : null,
     rows
   }
-  fs.writeFileSync(path.join(RESULTS, `${backend}.json`), JSON.stringify(out, null, 2))
+  fs.writeFileSync(path.join(RESULTS, `${backend}${tag}.json`), JSON.stringify(out, null, 2))
   return out
 }
 
@@ -118,7 +120,7 @@ function metricsFor (run) {
 
 function writeSummary () {
   const runs = Object.fromEntries(['local', 'cloud'].map(b => {
-    const f = path.join(RESULTS, `${b}.json`)
+    const f = path.join(RESULTS, `${b}${b === 'local' ? tag : ''}.json`)
     return [b, fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null]
   }))
   const m = { local: metricsFor(runs.local), cloud: metricsFor(runs.cloud) }
@@ -150,7 +152,7 @@ function writeSummary () {
     backendLabels: { local: 'Tabibu on device (QVAC)', cloud: `Cloud (${runs.cloud?.model || 'claude-opus-5-5'})` },
     metrics: rows.map(([key, label]) => ({ key, label, values: { local: m.local?.[key] ?? null, cloud: m.cloud?.[key] ?? null } }))
   }
-  fs.writeFileSync(path.join(RESULTS, 'summary.json'), JSON.stringify(summary, null, 2))
+  fs.writeFileSync(path.join(RESULTS, `summary${tag}.json`), JSON.stringify(summary, null, 2))
   console.log('\n' + summary.metrics.map(x => `${x.label.padEnd(58)} ${String(x.values.local ?? '—').padStart(14)} ${String(x.values.cloud ?? '—').padStart(14)}`).join('\n'))
 }
 
