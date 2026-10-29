@@ -13,7 +13,9 @@ export const CLOUD_MODEL = process.env.TABIBU_CLOUD_MODEL || 'claude-sonnet-5-5'
 // USD per million tokens (input, output) for claude-sonnet-5-5.
 const PRICE = { input: 2, output: 10 }
 
-const client = new Anthropic()
+// Pinned to the public API: some hosted shells set ANTHROPIC_BASE_URL for their
+// own use, and the SDK would otherwise send these requests there.
+const client = new Anthropic({ baseURL: process.env.TABIBU_ANTHROPIC_BASE_URL || 'https://api.anthropic.com' })
 
 async function call ({ system, user, schema, maxTokens = 2000 }) {
   const body = {
