@@ -149,7 +149,7 @@ function writeSummary () {
     device: runs.local?.device || runs.cloud?.device || deviceInfo(),
     date: (runs.local?.date || runs.cloud?.date || new Date().toISOString()).slice(0, 10),
     backends: ['local', 'cloud'],
-    backendLabels: { local: 'Tabibu on device (QVAC)', cloud: `Cloud (${runs.cloud?.model || 'claude-opus-5-5'})` },
+    backendLabels: { local: 'Tabibu on device (QVAC)', cloud: `Cloud (${runs.cloud?.model || 'claude-sonnet-5-5'})` },
     metrics: rows.map(([key, label]) => ({ key, label, values: { local: m.local?.[key] ?? null, cloud: m.cloud?.[key] ?? null } }))
   }
   fs.writeFileSync(path.join(RESULTS, `summary${tag}.json`), JSON.stringify(summary, null, 2))

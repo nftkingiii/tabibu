@@ -9,9 +9,9 @@ import { search } from '../src/store.js'
 import { verifyStep, MESSAGES } from '../src/pipeline.js'
 import { detectLanguage } from '../src/lang.js'
 
-export const CLOUD_MODEL = process.env.TABIBU_CLOUD_MODEL || 'claude-opus-5-5'
-// USD per million tokens (input, output) for claude-opus-5-5.
-const PRICE = { input: 4, output: 20 }
+export const CLOUD_MODEL = process.env.TABIBU_CLOUD_MODEL || 'claude-sonnet-5-5'
+// USD per million tokens (input, output) for claude-sonnet-5-5.
+const PRICE = { input: 2, output: 10 }
 
 const client = new Anthropic()
 

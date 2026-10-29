@@ -14,7 +14,7 @@ A promoter standing in a home with a sick child needs the right dose and the dan
 
 ## The cloud workflow, and what moved
 
-**Before (cloud):** the question goes to a hosted large language model. It translates Kiswahili, reads guideline excerpts, writes the answer and decides whether to refer. Each question needs a connection, sends the child's details off the device, and costs money per call. `eval/cloud.js` implements this workflow with `claude-opus-5-5` so the comparison is measured, not described.
+**Before (cloud):** the question goes to a hosted large language model. It translates Kiswahili, reads guideline excerpts, writes the answer and decides whether to refer. Each question needs a connection, sends the child's details off the device, and costs money per call. `eval/cloud.js` implements this workflow with `claude-sonnet-5-5` so the comparison is measured, not described.
 
 **After (Tabibu):** every step runs on the device through QVAC.
 
@@ -110,7 +110,6 @@ Everything in this repository was written during AI Yako (24–30 October 2026).
 - [`pdfjs-dist`](https://github.com/mozilla/pdf.js) (Mozilla) for PDF text extraction, Apache-2.0
 - [`@anthropic-ai/sdk`](https://github.com/anthropics/anthropic-sdk-typescript), used only by the cloud baseline in `eval/`, MIT
 - *Caring for the sick child in the community: Participant manual*, © WHO 2011, all rights reserved. It is downloaded from WHO at setup time and never redistributed in this repository.
-- Development was assisted by Claude Code.
 
 ## Licence
 
