@@ -1,4 +1,17 @@
-# Offline demo script (about 3 minutes)
+# Offline demo
+
+## The recorded demo
+
+`docs/demo/tabibu-demo.mp4` was made by `scripts/demo/`, on Linux as root:
+
+```bash
+unshare -n sh scripts/demo/inside.sh   # no network inside: brings up loopback, starts Tabibu, records
+node scripts/demo/cut.cjs              # joins the frames into scripts/demo/out/tabibu-demo.mp4
+```
+
+`inside.sh` captures the network checks shown in the opening frame from inside the same sandbox. `record.cjs` drives the real app with Playwright and grabs still frames. It pauses while the models run, so recording doesn't slow them down, and the captions state how long each wait was.
+
+## Recording on your own laptop (about 3 minutes)
 
 The rules ask for a recording that shows the core AI feature working with the internet disconnected. This script makes that visible on screen, so the video still makes sense with the sound off.
 

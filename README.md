@@ -6,6 +6,8 @@ Tabibu (Swahili for "healer") is an offline assistant for community health promo
 
 ![Tabibu answering a Kiswahili question with page citations](docs/screenshots/answer-sw.png)
 
+**Demo video:** [`docs/demo/tabibu-demo.mp4`](docs/demo/tabibu-demo.mp4) (83 s, captioned, no sound). It was recorded from the real app with Tabibu, its QVAC models and the browser all inside a Linux network namespace with no network interface. The opening frame shows the network checks run in that sandbox. The two model waits (47 s and 25 s on a 4-thread CPU) are cut, and the captions say so.
+
 ## The problem
 
 Kenya's community health promoters do household visits where signal is weak or data costs money. Reporting on Kenya's electronic Community Health Information System found that promoters buy their own data bundles, often from their stipends, to sync records, and that the system was unusable for one to three months at a time ([Nation, 2025](https://nation.africa/kenya/health/broken-system-how-kenya-s-digital-health-revolution-is-failing-on-the-frontline-5291546); [PLOS One, 2026](https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0358994)). Swahili AI support is weak in most tools ([GSMA via Techpoint, 2026](https://techpoint.africa/news/africa-ai-language-models/)). Existing AI help for Swahili speakers, such as Jacaranda Health's PROMPTS helpdesk for mothers, runs on servers and reaches people by SMS ([IDRC](https://idrc-crdi.ca/en/stories/technology-support-maternity)).

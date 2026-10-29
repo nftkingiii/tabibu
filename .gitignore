@@ -6,3 +6,6 @@ HACK_EVENT_GATE.json
 SOURCES.md
 .env
 *.log
+scripts/demo/out/
+scripts/demo/proof.json
+scripts/demo/*.log
