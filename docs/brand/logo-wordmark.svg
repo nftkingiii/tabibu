@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
+  <rect width="1200" height="400" fill="#f6f2ea"/>
+  <g transform="translate(90 72) scale(0.5)">
+    <rect width="512" height="512" rx="112" fill="#2f6650"/>
+    <path d="M256 104c-74 52-106 110-106 167a106 106 0 0 0 212 0c0-57-32-115-106-167z" fill="#f4efe4"/>
+    <path d="M256 196v138M187 265h138" stroke="#2f6650" stroke-width="30" stroke-linecap="round"/>
+  </g>
+  <text x="400" y="232" font-family="Iowan Old Style, Palatino Linotype, Palatino, Book Antiqua, Georgia, serif" font-size="150" font-weight="600" fill="#1f1d1a">Tabibu</text>
+  <text x="404" y="300" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="34" fill="#6b655c">Offline guideline answers, on your device</text>
+</svg>
