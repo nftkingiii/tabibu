@@ -1,0 +1,46 @@
+[
+  {
+    "id": "proof",
+    "text": "This machine has no network. Only the loopback interface exists, and reaching the internet fails. Tabibu, its AI models, and this browser all run inside it."
+  },
+  {
+    "id": "open",
+    "text": "Tabibu opens from the device itself, and its connection check confirms there is no internet."
+  },
+  {
+    "id": "ask_sw",
+    "text": "A community health promoter asks in Kiswahili: my three-year-old has a cough and fast breathing. Which medicine?"
+  },
+  {
+    "id": "answer_sw",
+    "text": "Tabibu answers in Kiswahili, and every step cites the page of the WHO manual it came from. The model's wait is cut; the caption shows how long it took."
+  },
+  {
+    "id": "cite",
+    "text": "Open a citation, and the manual page appears with its numbers highlighted. If a step's numbers are not on its page, or a dose is for the wrong age, Tabibu removes it."
+  },
+  {
+    "id": "danger_ask",
+    "text": "Danger signs are checked by fixed rules from the manual, not by the model."
+  },
+  {
+    "id": "danger_result",
+    "text": "Fever for eight days, and convulsions. Urgent referral, citing the manual's danger-sign page."
+  },
+  {
+    "id": "refuse",
+    "text": "Questions outside the guideline are refused. Tabibu does not guess."
+  },
+  {
+    "id": "evidence",
+    "text": "We ran the same forty questions on the device and in the cloud. The cloud is faster. The device sends nothing, costs nothing, raised no false referrals, and works with the internet off."
+  },
+  {
+    "id": "device",
+    "text": "Three models from the Q-vac registry, loaded from local files on this machine."
+  },
+  {
+    "id": "end",
+    "text": "Tabibu. Guideline answers that never leave the device."
+  }
+]

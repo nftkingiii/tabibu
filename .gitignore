@@ -9,3 +9,8 @@ SOURCES.md
 scripts/demo/out/
 scripts/demo/proof.json
 scripts/demo/*.log
+scripts/demo/clips/
+scripts/demo/timings.json
+scripts/demo/*.onnx
+scripts/demo/voices-*.bin
+scripts/demo/venv/
