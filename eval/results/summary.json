@@ -9,14 +9,14 @@
   ],
   "backendLabels": {
     "local": "Tabibu on device (QVAC)",
-    "cloud": "Cloud (claude-opus-5-5)"
+    "cloud": "Cloud (claude-sonnet-5-5)"
   },
   "metrics": [
     {
       "key": "answers",
       "label": "Guideline answers with every expected fact",
       "values": {
-        "local": "17/22",
+        "local": "20/22",
         "cloud": null
       }
     },
@@ -24,7 +24,7 @@
       "key": "pages",
       "label": "Answer cites the page that states it",
       "values": {
-        "local": "16/22",
+        "local": "19/22",
         "cloud": null
       }
     },
@@ -32,7 +32,7 @@
       "key": "swahili",
       "label": "Kiswahili questions answered in Kiswahili",
       "values": {
-        "local": "7/8",
+        "local": "8/8",
         "cloud": null
       }
     },
@@ -40,7 +40,7 @@
       "key": "dangerRecall",
       "label": "Danger signs that triggered urgent referral",
       "values": {
-        "local": "10/11",
+        "local": "11/11",
         "cloud": null
       }
     },
@@ -48,7 +48,7 @@
       "key": "exactSigns",
       "label": "Exact danger sign named, with page",
       "values": {
-        "local": "10/11",
+        "local": "11/11",
         "cloud": null
       }
     },
@@ -70,9 +70,9 @@
     },
     {
       "key": "removed",
-      "label": "Steps removed because a number was not on the cited page",
+      "label": "Steps removed by verification (number not on page, or wrong age row)",
       "values": {
-        "local": "9 of 103",
+        "local": "9 of 109",
         "cloud": null
       }
     },
@@ -80,7 +80,7 @@
       "key": "p50",
       "label": "Median time per question",
       "values": {
-        "local": "35.8 s",
+        "local": "36.0 s",
         "cloud": null
       }
     },
@@ -88,7 +88,7 @@
       "key": "p90",
       "label": "90th percentile time",
       "values": {
-        "local": "60.8 s",
+        "local": "64.2 s",
         "cloud": null
       }
     },
@@ -112,7 +112,7 @@
       "key": "memory",
       "label": "Peak memory on device",
       "values": {
-        "local": "7.2 GB",
+        "local": "7.4 GB",
         "cloud": null
       }
     },
