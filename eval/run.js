@@ -156,9 +156,12 @@ function writeSummary () {
   console.log('\n' + summary.metrics.map(x => `${x.label.padEnd(58)} ${String(x.values.local ?? '—').padStart(14)} ${String(x.values.cloud ?? '—').padStart(14)}`).join('\n'))
 }
 
-for (const b of backends) {
-  console.log(`\n${b}: ${items.length} questions`)
-  await runBackend(b)
+// --summary-only rebuilds summary.json from the saved results without running.
+if (!process.argv.includes('--summary-only')) {
+  for (const b of backends) {
+    console.log(`\n${b}: ${items.length} questions`)
+    await runBackend(b)
+  }
 }
 writeSummary()
 await unloadAll()

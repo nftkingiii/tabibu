@@ -32,30 +32,39 @@ A promoter standing in a home with a sick child needs the right dose and the dan
 ## Results
 
 <!-- results:start -->
-On-device results through QVAC. The cloud column fills in after running npm run eval -- --backend=cloud with an API key on this machine.
+The same questions, guideline excerpts and verification, run once on the device through QVAC and once through a cloud model.
 
 | Measure | On device, run 1 (before fixes) | On device, run 2 (Qwen3-4B) | Light option on device (Qwen3.5-2B) | Cloud (claude-sonnet-5-5) |
 |---|---:|---:|---:|---:|
-| Guideline answers with every expected fact | 17/22 | 20/22 | 14/22 | — |
-| Answer cites the page that states it | 16/22 | 19/22 | 14/22 | — |
-| Kiswahili questions answered in Kiswahili | 7/8 | 8/8 | 5/8 | — |
-| Danger signs that triggered urgent referral | 10/11 | 11/11 | 11/11 | — |
+| Guideline answers with every expected fact | 17/22 | 20/22 | 14/22 | 22/22 |
+| Answer cites the page that states it | 16/22 | 19/22 | 14/22 | 18/22 |
+| Kiswahili questions answered in Kiswahili | 7/8 | 8/8 | 5/8 | 8/8 |
+| Danger signs that triggered urgent referral | 10/11 | 11/11 | 11/11 | 11/11 |
 | Exact danger sign named, with page | 10/11 | 11/11 | 11/11 | — |
-| Referral raised with no danger sign | 0/29 | 0/29 | 0/29 | — |
-| Out-of-scope questions refused | 8/8 | 8/8 | 8/8 | — |
-| Steps removed by verification (number not on page, or wrong age row) | 9 of 103 | 9 of 109 | 5 of 74 | — |
-| Median time per question | 35.8 s | 36.0 s | 17.7 s | — |
-| 90th percentile time | 60.8 s | 64.2 s | 43.1 s | — |
-| Data sent off the device per question | 0.0 KB | 0.0 KB | 0.0 KB | — |
-| Cost per 1,000 questions | $0.00 | $0.00 | $0.00 | — |
-| Peak memory on device | 7.2 GB | 7.4 GB | 5.8 GB | — |
-| Works with the internet off | Yes | Yes | Yes | — |
-| Errors | 0 | 0 | 0 | — |
+| Referral raised with no danger sign | 0/29 | 0/29 | 0/29 | 3/29 |
+| Out-of-scope questions refused | 8/8 | 8/8 | 8/8 | 8/8 |
+| Steps removed by verification (number not on page, or wrong age row) | 9 of 103 | 9 of 109 | 5 of 74 | 0 of 108 |
+| Median time per question | 35.8 s | 36.0 s | 17.7 s | 3.7 s |
+| 90th percentile time | 60.8 s | 64.2 s | 43.1 s | 6.6 s |
+| Data sent off the device per question | 0.0 KB | 0.0 KB | 0.0 KB | 4.9 KB |
+| Cost per 1,000 questions | $0.00 | $0.00 | $0.00 | $6.14 |
+| Peak memory on device | 7.2 GB | 7.4 GB | 5.8 GB | Not on device |
+| Works with the internet off | Yes | Yes | Yes | No |
+| Errors | 0 | 0 | 0 | 0 |
 
 40 questions from eval/questions.json (22 guideline answers, 10 danger-sign cases, 8 out-of-scope), written by the developer before the first run. Measured on Intel(R) Xeon(R) Processor @ 2.10GHz (4 threads), 16 GB RAM, linux 6.18.44-fc-v185, 2026-10-29, inside a Linux network namespace with no network interface. Raw per-question results are in `eval/results/`. A dash means not measured.
 
 Run 1 exposed two problems: the model sometimes quoted the dose row for the wrong age (the age check removed those rows, leaving the answer without a dose), and one phrasing of swollen feet was missed. Between runs, Tabibu began quoting the right-age row from the same page, the swollen-feet rule was widened, and the refusal threshold was set from run 1's score gap. These fixes were made after seeing run 1 on the same questions, so run 2 may overstate performance on new questions.
 <!-- results:end -->
+
+### What moving to the device costs and buys
+
+- **Quality:** the cloud model got every expected fact in 22 of 22 answers; Tabibu on the device got 20 of 22. Both of the device's misses lack a fact rather than state a wrong one: one leaves out the 10-day duration, and one leaves out the artesunate dose after the check removed a dose row for the wrong age. The check catches dose rows that state an age band; a dose written without its age band would not be caught.
+- **Safety:** both caught all 11 danger-sign cases. The cloud model, which decides referral itself, also raised urgent referrals on 3 of 29 questions with no danger sign: two general questions asking what the danger signs are, and a pre-referral dose question. Tabibu's fixed rules raised none.
+- **Speed:** the cloud answered in a median 3.7 s against 36 s on a 4-thread CPU with no GPU. This is the biggest cost of moving to the device. A GPU or Apple silicon through QVAC should narrow it, but that was not measured here.
+- **Memory:** 7.4 GB peak on the device, or 5.8 GB with the light model, which runs at a 17.7 s median but gets 14 of 22 answers fully right.
+- **Privacy and data:** each cloud question sent 4.9 KB, including the child's description, to a server. On the device nothing leaves the machine.
+- **Cost and availability:** about $6.14 per 1,000 questions in the cloud, plus mobile data and a working connection. On the device it costs nothing per question and works with the internet off.
 
 ## Try it
 
