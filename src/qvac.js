@@ -80,8 +80,10 @@ export async function generateJson ({ system, user, schema, maxTokens = 600 }) {
     responseFormat: { type: 'json_schema', json_schema: { name: 'answer', schema } }
   })
   const final = await run.final
-  const text = final.contentText.replace(/<think>[\s\S]*?<\/think>/g, '').trim()
-  return { value: JSON.parse(text), stats: final.stats }
+  // Some chat templates open a <think> block even with thinking off; the JSON
+  // object itself starts at the first brace after it.
+  const text = final.contentText.replace(/<think>[\s\S]*?<\/think>/g, '')
+  return { value: JSON.parse(text.slice(text.indexOf('{'))), stats: final.stats }
 }
 
 const SHOTS = [

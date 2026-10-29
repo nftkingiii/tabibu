@@ -6,4 +6,3 @@ HACK_EVENT_GATE.json
 SOURCES.md
 .env
 *.log
-eval/results/*.raw.json

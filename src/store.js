@@ -87,17 +87,25 @@ export function findPhrase (phrase) {
   return null
 }
 
+// Training manuals mix guidance with practice material (exercises, role plays,
+// blank recording forms, case studies) that asks questions instead of answering
+// them. Those passages rank slightly lower so guidance wins close calls.
+const PRACTICE = /^(exercise|role play|video|discuss|demonstration|part \d|child \d|sick child recording form|child.s name|referral note|for each child)/i
+const PRACTICE_PENALTY = 0.05
+
+// Top passages, at most two per page, so a page's dose table can sit next to
+// the sentence that matched best.
 export async function search (query, k) {
   const { chunks } = loadIndex()
   const q = normalize(await embedQuery(query))
-  const scored = chunks.map(c => ({ c, score: dot(q, c.vec) }))
+  const scored = chunks.map(c => ({ c, score: dot(q, c.vec) - (PRACTICE.test(c.title) ? PRACTICE_PENALTY : 0) }))
   scored.sort((a, b) => b.score - a.score)
   const out = []
-  const seen = new Set()
+  const perPage = new Map()
   for (const { c, score } of scored) {
     const key = `${c.doc}:${c.pdfPage}`
-    if (seen.has(key)) continue
-    seen.add(key)
+    if ((perPage.get(key) || 0) >= 2) continue
+    perPage.set(key, (perPage.get(key) || 0) + 1)
     out.push({ id: c.id, doc: c.doc, pdfPage: c.pdfPage, printedPage: c.printedPage, title: c.title, text: c.text, score })
     if (out.length === k) break
   }

@@ -7,6 +7,31 @@ export const DATA_DIR = process.env.TABIBU_DATA_DIR || path.join(ROOT, 'data')
 export const INDEX_FILE = path.join(DATA_DIR, 'index.json')
 export const EVAL_DIR = path.join(ROOT, 'eval')
 
+// Chat model candidates; TABIBU_CHAT picks one. All are QVAC registry entries.
+export const CHAT_MODELS = {
+  'qwen3-1.7b': {
+    registry: 'QWEN3_1_7B_INST_Q4',
+    file: 'Qwen3-1.7B-Q4_0.gguf',
+    url: 'https://huggingface.co/unsloth/Qwen3-1.7B-GGUF/resolve/d7f544eead698dbd1f15126ef60b45a1e1933222/Qwen3-1.7B-Q4_0.gguf',
+    role: 'Grounded answer generation',
+    license: 'Apache-2.0'
+  },
+  'qwen3.5-2b': {
+    registry: 'QWEN3_5_2B_MULTIMODAL_Q4_K_M',
+    file: 'Qwen3.5-2B-Q4_K_M.gguf',
+    url: 'https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/f6d5376be1edb4d416d56da11e5397a961aca8ae/Qwen3.5-2B-Q4_K_M.gguf',
+    role: 'Grounded answer generation',
+    license: 'Apache-2.0'
+  },
+  'qwen3-4b': {
+    registry: 'QWEN3_4B_Q4_K_M',
+    file: 'Qwen3-4B-Q4_K_M.gguf',
+    url: 'https://huggingface.co/unsloth/Qwen3-4B-GGUF/resolve/9b5c4f3506ac99d74e59ecd9aa9abb05537b7f59/Qwen3-4B-Q4_K_M.gguf',
+    role: 'Grounded answer generation',
+    license: 'Apache-2.0'
+  }
+}
+
 // Every model is a QVAC registry entry. `registry` names the constant exported by
 // @qvac/sdk; setup verifies the downloaded file against that constant's sha256.
 export const MODELS = {
@@ -17,13 +42,7 @@ export const MODELS = {
     role: 'Embeddings for guideline search',
     license: 'Gemma Terms of Use'
   },
-  chat: {
-    registry: 'QWEN3_1_7B_INST_Q4',
-    file: 'Qwen3-1.7B-Q4_0.gguf',
-    url: 'https://huggingface.co/unsloth/Qwen3-1.7B-GGUF/resolve/d7f544eead698dbd1f15126ef60b45a1e1933222/Qwen3-1.7B-Q4_0.gguf',
-    role: 'Grounded answer generation',
-    license: 'Apache-2.0'
-  },
+  chat: CHAT_MODELS[process.env.TABIBU_CHAT || 'qwen3-4b'],
   translate: {
     registry: 'AFRICAN_4B_TRANSLATION_Q4_K_M',
     file: 'AfriqueGemma-4B.Q4_K_M.gguf',

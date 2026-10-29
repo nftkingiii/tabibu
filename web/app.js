@@ -171,7 +171,7 @@ function render (r, { pendingSw = false, memory = null } = {}) {
   parts.push(`<details><summary>${esc(t.sources)}</summary><ul>${r.sources.map(s => `<li>${citeButton(s)} <span class="muted num">match ${s.score.toFixed(2)}</span> ${esc(s.title)}</li>`).join('')}</ul></details>`)
 
   if (r.timings?.total) {
-    parts.push(`<div class="meta"><span class="num">${(r.timings.total / 1000).toFixed(1)} s on this device</span>${memory ? `<span class="num">${memory.totalMb} MB in use</span>` : ''}<span>Models: QVAC · Qwen3-1.7B · EmbeddingGemma · AfriqueGemma-4B</span></div>`)
+    parts.push(`<div class="meta"><span class="num">${(r.timings.total / 1000).toFixed(1)} s on this device</span>${memory ? `<span class="num">${memory.totalMb} MB in use</span>` : ''}<span>Models: QVAC · Qwen3-4B · EmbeddingGemma · AfriqueGemma-4B</span></div>`)
   }
   $('#result').innerHTML = parts.join('')
 }

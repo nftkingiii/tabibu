@@ -2,7 +2,7 @@
 //   1. Swahili question -> English (AfriqueGemma-4B)
 //   2. Danger-sign screen (deterministic rules that cite the manual)
 //   3. Guideline search (EmbeddingGemma vectors)
-//   4. Grounded answer as JSON with one source per step (Qwen3-1.7B)
+//   4. Grounded answer as JSON with one source per step (Qwen3-4B by default)
 //   5. Verification: every step must cite a retrieved page, and every number in
 //      it must appear on that page. Unsupported steps are removed, not shown.
 //   6. English answer -> Swahili (AfriqueGemma-4B)
@@ -128,6 +128,14 @@ export async function answer ({ question, lang = 'auto' }, onStage = () => {}) {
 // was stated in the question itself (such as the child's age). This stops a
 // small model from inventing a dose.
 export function verifyStep (text, hit, question = '') {
+  if (/\bexcerpts?\b|\bcovered\b|steps list|\bthe question\b/i.test(text)) {
+    return { ok: false, why: 'talks about the answer format, not the child' }
+  }
+  const age = childAgeMonths(question)
+  const bands = ageBands(text)
+  if (age != null && bands.length && !bands.some(([lo, hi]) => age >= lo && age < hi)) {
+    return { ok: false, why: `dose row is for ages ${bands.map(([lo, hi]) => `${lo}-${hi} months`).join(', ')}, the child is ${age} months` }
+  }
   const page = pageText(hit.doc, hit.pdfPage)?.text || hit.text
   const haystack = normalizeNumbers(page)
   const given = new Set(numbersIn(question))
@@ -138,6 +146,30 @@ export function verifyStep (text, hit, question = '') {
     }
   }
   return { ok: true }
+}
+
+const WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, eighteen: 18 }
+const toNum = w => /^\d+$/.test(w) ? Number(w) : WORDS[w.toLowerCase()]
+
+// The child's age in months, if the question states one ("an 8-month-old",
+// "a 2 year old", "aged 3 years").
+export function childAgeMonths (question) {
+  const m = question.match(/\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|eighteen)[- ](month|year)s?[- ]old\b|\baged? (\d+) (month|year)s?\b/i)
+  if (!m) return null
+  const n = toNum(m[1] || m[3])
+  if (n == null) return null
+  return /year/i.test(m[2] || m[4]) ? n * 12 : n
+}
+
+// Age bands in a dose row, e.g. "Age 2 months up to 12 months" -> [2, 12].
+function ageBands (text) {
+  const out = []
+  for (const m of text.matchAll(/(\d+) (months?|years?) up to (\d+) (months?|years?)/gi)) {
+    const lo = Number(m[1]) * (/year/i.test(m[2]) ? 12 : 1)
+    const hi = Number(m[3]) * (/year/i.test(m[4]) ? 12 : 1)
+    out.push([lo, hi])
+  }
+  return out
 }
 
 function numbersIn (s) {
