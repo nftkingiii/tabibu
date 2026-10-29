@@ -18,10 +18,10 @@ export function modelsPresent () {
 
 const LOAD_OPTIONS = {
   embed: { modelType: 'embeddings', modelConfig: {} },
-  chat: { modelType: 'llm', modelConfig: { ctx_size: 4096, temp: 0.1 } },
+  chat: { modelType: 'llm', modelConfig: { ctx_size: 4096, temp: 0.1, load_mode: 'none' } },
   // AfriqueGemma is a base model, so it is driven with a few-shot prompt and
   // stops at the end of the translated line.
-  translate: { modelType: 'llm', modelConfig: { ctx_size: 2048, temp: 0, stop_sequences: ['\n'] } }
+  translate: { modelType: 'llm', modelConfig: { ctx_size: 2048, temp: 0, stop_sequences: ['\n'], load_mode: 'none' } }
 }
 
 export async function ensure (key) {

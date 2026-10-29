@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tabibu</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <nav class="rail" aria-label="Sections">
+    <div class="rail-mark" aria-hidden="true">
+      <img src="/icon.svg" alt="" width="28" height="28">
+      <span class="rail-label brand">Tabibu</span>
+    </div>
+    <div role="tablist" aria-orientation="vertical" class="rail-tabs">
+      <button role="tab" id="tab-ask" aria-controls="ask" aria-selected="true" data-tab="ask">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><span class="rail-label">Ask</span>
+      </button>
+      <button role="tab" id="tab-library" aria-controls="library" aria-selected="false" data-tab="library" tabindex="-1">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H5zM19 4h-4a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h4z"/></svg><span class="rail-label">Guidelines</span>
+      </button>
+      <button role="tab" id="tab-evidence" aria-controls="evidence" aria-selected="false" data-tab="evidence" tabindex="-1">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11M12 20V5M19 20v-6"/></svg><span class="rail-label">Evidence</span>
+      </button>
+      <button role="tab" id="tab-device" aria-controls="device" aria-selected="false" data-tab="device" tabindex="-1">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg><span class="rail-label">Device</span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="shell">
+    <div class="topline">
+      <span class="brand-mobile">Tabibu</span>
+      <button class="net-chip" id="net-chip" type="button" title="Check internet connection">
+        <span class="dot" aria-hidden="true"></span><span id="net-text">Check connection</span>
+      </button>
+    </div>
+
+    <main>
+      <section id="ask" role="tabpanel" aria-labelledby="tab-ask">
+        <h1>Tabibu</h1>
+        <p class="lede">Answers from the WHO/UNICEF guide <em>Caring for the sick child in the community</em>, in English or Kiswahili. Every step cites its page. Everything runs on this device.</p>
+
+        <form id="ask-form" class="ask">
+          <div class="lang" role="radiogroup" aria-label="Language">
+            <label><input type="radio" name="lang" value="auto" checked><span>Auto</span></label>
+            <label><input type="radio" name="lang" value="en"><span>English</span></label>
+            <label><input type="radio" name="lang" value="sw"><span>Kiswahili</span></label>
+          </div>
+          <label for="question" class="sr-only">Question</label>
+          <textarea id="question" name="question" rows="3" maxlength="600" placeholder="Describe the child or ask about a treatment. Eleza hali ya mtoto au uliza kuhusu tiba." required></textarea>
+          <div class="ask-row">
+            <span class="hint">Enter to ask · Shift+Enter for a new line</span>
+            <button type="submit" id="ask-btn" class="primary">Ask</button>
+          </div>
+        </form>
+
+        <div id="examples" class="examples">
+          <p class="muted">Try one:</p>
+          <button type="button" class="chip">Mtoto wangu wa miaka 3 ana kikohozi na anapumua haraka. Nimpe dawa gani?</button>
+          <button type="button" class="chip">What is the zinc dose for a 4 month old with diarrhoea?</button>
+          <button type="button" class="chip">A 2 year old has had fever for 8 days and now has convulsions.</button>
+        </div>
+
+        <ol id="progress" class="progress" hidden></ol>
+        <div id="result" class="result" aria-live="polite"></div>
+      </section>
+
+      <section id="library" role="tabpanel" aria-labelledby="tab-library" hidden>
+        <h2>Guidelines on this device</h2>
+        <div id="library-body"><p class="muted">Loading…</p></div>
+      </section>
+
+      <section id="evidence" role="tabpanel" aria-labelledby="tab-evidence" hidden>
+        <h2>Cloud to pocket</h2>
+        <div id="evidence-body"><p class="muted">Loading…</p></div>
+      </section>
+
+      <section id="device" role="tabpanel" aria-labelledby="tab-device" hidden>
+        <h2>This device</h2>
+        <div id="device-body"><p class="muted">Loading…</p></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="page-dialog" aria-labelledby="page-title">
+    <div class="dialog-head">
+      <h3 id="page-title">Page</h3>
+      <button type="button" class="ghost" id="page-close" aria-label="Close">Close</button>
+    </div>
+    <pre id="page-text"></pre>
+  </dialog>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

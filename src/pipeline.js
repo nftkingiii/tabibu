@@ -98,13 +98,7 @@ export async function answer ({ question, lang = 'auto' }, onStage = () => {}) {
     }
   }
 
-  if (language === 'sw' && steps.length) {
-    await time('translate_out', async () => {
-      for (const step of steps) step.textSw = await translate(step.text, 'en', 'sw')
-    })
-  }
-
-  return {
+  const result = {
     question,
     questionEn,
     language,
@@ -116,8 +110,18 @@ export async function answer ({ question, lang = 'auto' }, onStage = () => {}) {
     message: danger.refer ? MESSAGES[language].refer : covered ? null : MESSAGES[language].notCovered,
     sources: hits.map(h => ({ ...cite(h), score: round(h.score), title: h.title })),
     topScore: round(topScore),
-    timings: { ...timings, total: Date.now() - started }
+    timings
   }
+
+  if (language === 'sw' && steps.length) {
+    onStage('draft', result)
+    await time('translate_out', async () => {
+      for (const step of steps) step.textSw = await translate(step.text, 'en', 'sw')
+    })
+  }
+
+  result.timings = { ...timings, total: Date.now() - started }
+  return result
 }
 
 // A step survives only if every number in it appears on the page it cites, or
