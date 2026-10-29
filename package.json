@@ -1,0 +1,21 @@
+{
+  "name": "tabibu",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline guideline assistant for community health promoters, built on QVAC",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@qvac/sdk": "^0.22.0",
+    "pdfjs-dist": "^4.10.38"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "start": "node src/server.js",
+    "ask": "node scripts/ask.js",
+    "eval": "node eval/run.js"
+  }
+}

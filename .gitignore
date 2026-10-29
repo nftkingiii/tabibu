@@ -1,0 +1,9 @@
+node_modules/
+models/*.gguf
+data/
+PROJECT_STATE.md
+HACK_EVENT_GATE.json
+SOURCES.md
+.env
+*.log
+eval/results/*.raw.json
