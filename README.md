@@ -30,7 +30,29 @@ A promoter standing in a home with a sick child needs the right dose and the dan
 ## Results
 
 <!-- results:start -->
-Results are being generated.
+On-device results through QVAC. The cloud column fills in after running npm run eval -- --backend=cloud with an API key on this machine.
+
+| Measure | On device, run 1 (before fixes) | On device, run 2 (Qwen3-4B) | Light option on device (Qwen3.5-2B) | Cloud (claude-sonnet-5-5) |
+|---|---:|---:|---:|---:|
+| Guideline answers with every expected fact | 17/22 | 20/22 | 14/22 | — |
+| Answer cites the page that states it | 16/22 | 19/22 | 14/22 | — |
+| Kiswahili questions answered in Kiswahili | 7/8 | 8/8 | 5/8 | — |
+| Danger signs that triggered urgent referral | 10/11 | 11/11 | 11/11 | — |
+| Exact danger sign named, with page | 10/11 | 11/11 | 11/11 | — |
+| Referral raised with no danger sign | 0/29 | 0/29 | 0/29 | — |
+| Out-of-scope questions refused | 8/8 | 8/8 | 8/8 | — |
+| Steps removed by verification (number not on page, or wrong age row) | 9 of 103 | 9 of 109 | 5 of 74 | — |
+| Median time per question | 35.8 s | 36.0 s | 17.7 s | — |
+| 90th percentile time | 60.8 s | 64.2 s | 43.1 s | — |
+| Data sent off the device per question | 0.0 KB | 0.0 KB | 0.0 KB | — |
+| Cost per 1,000 questions | $0.00 | $0.00 | $0.00 | — |
+| Peak memory on device | 7.2 GB | 7.4 GB | 5.8 GB | — |
+| Works with the internet off | Yes | Yes | Yes | — |
+| Errors | 0 | 0 | 0 | — |
+
+40 questions from eval/questions.json (22 guideline answers, 10 danger-sign cases, 8 out-of-scope), written by the developer before the first run. Measured on Intel(R) Xeon(R) Processor @ 2.10GHz (4 threads), 16 GB RAM, linux 6.18.44-fc-v185, 2026-10-29, inside a Linux network namespace with no network interface. Raw per-question results are in `eval/results/`. A dash means not measured.
+
+Run 1 exposed two problems: the model sometimes quoted the dose row for the wrong age (the age check removed those rows, leaving the answer without a dose), and one phrasing of swollen feet was missed. Between runs, Tabibu began quoting the right-age row from the same page, the swollen-feet rule was widened, and the refusal threshold was set from run 1's score gap. These fixes were made after seeing run 1 on the same questions, so run 2 may overstate performance on new questions.
 <!-- results:end -->
 
 ## Try it
@@ -84,8 +106,8 @@ Then open http://localhost:4317 and switch the internet off.
 
 ## Device, memory and limits
 
-- **Built and measured on:** Linux x86-64, 4 CPU threads, 16 GB RAM, CPU only (no GPU). Numbers are in the Results table.
-- **Memory:** all three models loaded need about 6–7 GB. English-only use with the light answer model needs about 2 GB.
+- **Built and measured on:** Linux x86-64 (Intel Xeon @ 2.10 GHz, 4 threads), 16 GB RAM, CPU only, no GPU. Numbers are in the Results table.
+- **Memory:** measured peak was 7.4 GB with all three models (Qwen3-4B) and 5.8 GB with the light answer model, so 16 GB RAM is comfortable and 8 GB is tight. With `TABIBU_WARM=embed,chat`, the 2.9 GB translator stays unloaded until a Kiswahili question arrives (not separately measured).
 - **Speed:** CPU-only answers take tens of seconds, and a Kiswahili answer takes longer because it is translated in and out. A laptop with a GPU or Apple silicon will be faster through QVAC's GPU backends; that was not measured here.
 - **Hardware limit:** this is a laptop app. A phone build through QVAC's Expo support is possible future work and was not built or tested.
 

@@ -1,0 +1,136 @@
+{
+  "summary": "On-device results through QVAC. The cloud column fills in after running npm run eval -- --backend=cloud with an API key on this machine.",
+  "method": "40 questions from eval/questions.json (22 guideline answers, 10 danger-sign cases, 8 out-of-scope), written by the developer before the first run.",
+  "device": "Intel(R) Xeon(R) Processor @ 2.10GHz (4 threads), 16 GB RAM, linux 6.18.44-fc-v185",
+  "date": "2026-10-29",
+  "backends": [
+    "local",
+    "cloud"
+  ],
+  "backendLabels": {
+    "local": "Tabibu on device (QVAC)",
+    "cloud": "Cloud (claude-sonnet-5-5)"
+  },
+  "metrics": [
+    {
+      "key": "answers",
+      "label": "Guideline answers with every expected fact",
+      "values": {
+        "local": "14/22",
+        "cloud": null
+      }
+    },
+    {
+      "key": "pages",
+      "label": "Answer cites the page that states it",
+      "values": {
+        "local": "14/22",
+        "cloud": null
+      }
+    },
+    {
+      "key": "swahili",
+      "label": "Kiswahili questions answered in Kiswahili",
+      "values": {
+        "local": "5/8",
+        "cloud": null
+      }
+    },
+    {
+      "key": "dangerRecall",
+      "label": "Danger signs that triggered urgent referral",
+      "values": {
+        "local": "11/11",
+        "cloud": null
+      }
+    },
+    {
+      "key": "exactSigns",
+      "label": "Exact danger sign named, with page",
+      "values": {
+        "local": "11/11",
+        "cloud": null
+      }
+    },
+    {
+      "key": "falseReferrals",
+      "label": "Referral raised with no danger sign",
+      "values": {
+        "local": "0/29",
+        "cloud": null
+      }
+    },
+    {
+      "key": "refusals",
+      "label": "Out-of-scope questions refused",
+      "values": {
+        "local": "8/8",
+        "cloud": null
+      }
+    },
+    {
+      "key": "removed",
+      "label": "Steps removed by verification (number not on page, or wrong age row)",
+      "values": {
+        "local": "5 of 74",
+        "cloud": null
+      }
+    },
+    {
+      "key": "p50",
+      "label": "Median time per question",
+      "values": {
+        "local": "17.7 s",
+        "cloud": null
+      }
+    },
+    {
+      "key": "p90",
+      "label": "90th percentile time",
+      "values": {
+        "local": "43.1 s",
+        "cloud": null
+      }
+    },
+    {
+      "key": "kbSent",
+      "label": "Data sent off the device per question",
+      "values": {
+        "local": "0.0 KB",
+        "cloud": null
+      }
+    },
+    {
+      "key": "costPer1000",
+      "label": "Cost per 1,000 questions",
+      "values": {
+        "local": "$0.00",
+        "cloud": null
+      }
+    },
+    {
+      "key": "memory",
+      "label": "Peak memory on device",
+      "values": {
+        "local": "5.8 GB",
+        "cloud": null
+      }
+    },
+    {
+      "key": "offline",
+      "label": "Works with the internet off",
+      "values": {
+        "local": "Yes",
+        "cloud": null
+      }
+    },
+    {
+      "key": "errors",
+      "label": "Errors",
+      "values": {
+        "local": "0",
+        "cloud": null
+      }
+    }
+  ]
+}
