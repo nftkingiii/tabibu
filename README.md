@@ -6,7 +6,7 @@ Tabibu (Swahili for "healer") is an offline assistant for community health promo
 
 ![Tabibu answering a Kiswahili question with page citations](docs/screenshots/answer-sw.png)
 
-**Demo video:** [`docs/demo/tabibu-demo.mp4`](docs/demo/tabibu-demo.mp4) (83 s, captioned, no sound). It was recorded from the real app with Tabibu, its QVAC models and the browser all inside a Linux network namespace with no network interface. The opening frame shows the network checks run in that sandbox. The two model waits (47 s and 25 s on a 4-thread CPU) are cut, and the captions say so.
+**Demo video:** [`docs/demo/tabibu-demo.mp4`](docs/demo/tabibu-demo.mp4) (83 s, captioned, no sound). It was recorded from the real app with Tabibu, its QVAC models and the browser all inside a Linux network namespace with no network interface. The opening frame shows the network checks run in that sandbox. The two model waits (47 s and 28 s on a 4-thread CPU) are cut, and the captions say so.
 
 ## The problem
 
