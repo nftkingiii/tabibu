@@ -57,7 +57,7 @@ const RULES = [
   { id: 'muacred', label: 'Red on MUAC strap', labelSw: 'Nyekundu kwenye utepe wa MUAC', anchor: 'Red on the MUAC strap indicates severe malnutrition',
     test: t => /muac[^.]{0,30}\bred\b|\bred\b[^.]{0,30}muac|muac[^.]{0,30}nyekundu|nyekundu[^.]{0,30}muac/i.test(t) },
   { id: 'feet', label: 'Swelling of both feet', labelSw: 'Kuvimba kwa miguu yote miwili', anchor: 'Swelling of both feet indicates severe malnutrition',
-    test: t => /swell\w* (of )?(both|the|his|her) feet|(both|the) feet (are )?swollen|swollen (both )?feet|miguu (yote )?(miwili )?(imevimba|kuvimba)|kuvimba (kwa )?miguu/i.test(t) }
+    test: t => /(swell\w*|swollen)[^.]{0,20}\bfeet\b|\bfeet\b[^.]{0,20}(swollen|swelling|puffy)|oedema|edema|miguu[^.]{0,20}(imevimba|kuvimba|kuvimba)|kuvimba[^.]{0,15}miguu|imevimba miguu/i.test(t) }
 ]
 
 export function screenDanger (...texts) {

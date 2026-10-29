@@ -156,7 +156,8 @@ function render (r, { pendingSw = false, memory = null } = {}) {
       <ol class="steps">${r.steps.map(s => {
         const main = sw ? (s.textSw ? esc(s.textSw) : `<span class="pending">${esc(s.text)}</span>`) : esc(s.text)
         const en = sw && s.textSw ? `<span class="en">${esc(s.text)}</span>` : ''
-        return `<li>${main}${citeButton(s.source)}${en}</li>`
+        const note = s.quoted ? `<span class="en">${sw ? 'Imenukuliwa kutoka jedwali la dozi kwa umri wa mtoto' : 'Quoted from the dose table for the child\'s age'}</span>` : ''
+        return `<li>${main}${citeButton(s.source)}${en}${note}</li>`
       }).join('')}</ol>
       ${pendingSw ? '<p class="pending">Kutafsiri kwa Kiswahili…</p>' : ''}
     </div>`)

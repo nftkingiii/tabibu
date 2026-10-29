@@ -67,8 +67,9 @@ export const SOURCES = [
 export const RETRIEVAL = {
   topK: 4,
   // Below this cosine score the question is treated as outside the loaded
-  // guidelines. Calibrated on eval/questions.json (see eval/README.md).
-  minScore: Number(process.env.TABIBU_MIN_SCORE || 0.45)
+  // guidelines. Set between the lowest in-scope (0.632) and highest
+  // out-of-scope (0.547) top scores in the first benchmark run.
+  minScore: Number(process.env.TABIBU_MIN_SCORE || 0.59)
 }
 
 export const PORT = Number(process.env.PORT || 4317)

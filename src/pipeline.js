@@ -87,8 +87,15 @@ export async function answer ({ question, lang = 'auto' }, onStage = () => {}) {
         // The numbers may be right but attributed to the wrong excerpt; move the
         // citation to a retrieved page that does contain them.
         const other = hits.find(h => h !== cited && verifyStep(step.text, h, questionEn).ok)
-        if (other) steps.push({ text: step.text, source: cite(other), recited: true })
-        else removed.push({ text: step.text, why: check.why })
+        if (other) {
+          steps.push({ text: step.text, source: cite(other), recited: true })
+          continue
+        }
+        removed.push({ text: step.text, why: check.why })
+        // A dose row for the wrong age band: quote the row for the child's age
+        // from the same page instead, word for word.
+        const row = check.ageMismatch && cited ? rowForAge(step.text, cited, questionEn) : null
+        if (row && !steps.some(s => s.text === row)) steps.push({ text: row, source: cite(cited), quoted: true })
       }
     })
     if (!value.covered || steps.length === 0) {
@@ -134,7 +141,7 @@ export function verifyStep (text, hit, question = '') {
   const age = childAgeMonths(question)
   const bands = ageBands(text)
   if (age != null && bands.length && !bands.some(([lo, hi]) => age >= lo && age < hi)) {
-    return { ok: false, why: `dose row is for ages ${bands.map(([lo, hi]) => `${lo}-${hi} months`).join(', ')}, the child is ${age} months` }
+    return { ok: false, ageMismatch: true, why: `dose row is for ages ${bands.map(([lo, hi]) => `${lo}-${hi} months`).join(', ')}, the child is ${age} months` }
   }
   const page = pageText(hit.doc, hit.pdfPage)?.text || hit.text
   const haystack = normalizeNumbers(page)
@@ -170,6 +177,31 @@ function ageBands (text) {
     out.push([lo, hi])
   }
   return out
+}
+
+// The line on the page whose age band covers the child and that shares the most
+// words with the rejected step, so a zinc row is replaced by a zinc row.
+export function rowForAge (stepText, hit, question) {
+  const age = childAgeMonths(question)
+  const page = pageText(hit.doc, hit.pdfPage)?.text
+  if (age == null || !page) return null
+  const words = new Set(stepText.toLowerCase().match(/[a-z]{3,}/g) || [])
+  let best = null
+  const lines = page.split('\n')
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i]
+    const bands = ageBands(line)
+    // Dose tables wrap: "Age 2 months up to 3 years" then "1 suppository" on
+    // the next line, or a sentence that continues below.
+    const next = lines[i + 1]
+    if (next && !ageBands(next).length && (!/[.)]$/.test(line.trim()) || !/\d+\s*(tab|supp|breath|cup|ml|mg)/i.test(line.replace(/\d+ (months?|years?)/gi, '')))) line = `${line} ${next}`
+    if (!bands.length || !bands.some(([lo, hi]) => age >= lo && age < hi)) continue
+    // Only a row that states a dose or threshold, never a stray table fragment.
+    if (!/(\d+|½|one|two|half)\s*(\(\d\)\s*)?(whole\s+)?(tablets?|suppositor\w*|breaths|cups?)/i.test(line.replace(/\d+ (months?|years?)/gi, ''))) continue
+    const overlap = (line.toLowerCase().match(/[a-z]{3,}/g) || []).filter(w => words.has(w)).length
+    if (!best || overlap > best.overlap) best = { line: line.trim(), overlap }
+  }
+  return best && best.overlap >= 2 ? best.line : null
 }
 
 function numbersIn (s) {

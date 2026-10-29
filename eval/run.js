@@ -132,7 +132,7 @@ function writeSummary () {
     ['exactSigns', 'Exact danger sign named, with page'],
     ['falseReferrals', 'Referral raised with no danger sign'],
     ['refusals', 'Out-of-scope questions refused'],
-    ['removed', 'Steps removed because a number was not on the cited page'],
+    ['removed', 'Steps removed by verification (number not on page, or wrong age row)'],
     ['p50', 'Median time per question'],
     ['p90', '90th percentile time'],
     ['kbSent', 'Data sent off the device per question'],

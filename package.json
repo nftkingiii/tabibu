@@ -19,5 +19,8 @@
     "ask": "node scripts/ask.js",
     "eval": "node eval/run.js",
     "report": "node eval/report.js"
+  },
+  "overrides": {
+    "zod": "4.6.6"
   }
 }
