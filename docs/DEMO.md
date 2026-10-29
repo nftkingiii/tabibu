@@ -11,6 +11,12 @@ node scripts/demo/cut.cjs              # joins the frames into scripts/demo/out/
 
 `inside.sh` captures the network checks shown in the opening frame from inside the same sandbox. `record.cjs` drives the real app with Playwright and grabs still frames. It pauses while the models run, so recording doesn't slow them down, and the captions state how long each wait was.
 
+### Voice-over
+
+The narration is in `scripts/demo/narration.json`, one line per scene. `scripts/demo/tts.py` speaks it offline with Kokoro and writes each line's length to `timings.json`. Recording with `VO_TIMINGS=<that file>` holds each scene until its line ends, and `VO_DIR=<folder with clips/>` makes `cut.cjs` place each line where its scene starts and normalise to -16 LUFS. Kokoro's model files (`kokoro-v1.0.onnx`, `voices-v1.0.bin`) come from the kokoro-onnx releases page and are not committed.
+
+QVAC's own Supertonic voice was tried first, but it downloads only through the QVAC P2P registry, which did not complete from the build machine.
+
 ## Recording on your own laptop (about 3 minutes)
 
 The rules ask for a recording that shows the core AI feature working with the internet disconnected. This script makes that visible on screen, so the video still makes sense with the sound off.

@@ -6,7 +6,7 @@ Tabibu (Swahili for "healer") is an offline assistant for community health promo
 
 ![Tabibu answering a Kiswahili question with page citations](docs/screenshots/answer-sw.png)
 
-**Demo video:** [`docs/demo/tabibu-demo.mp4`](docs/demo/tabibu-demo.mp4) (83 s, captioned, no sound). It was recorded from the real app with Tabibu, its QVAC models and the browser all inside a Linux network namespace with no network interface. The opening frame shows the network checks run in that sandbox. The two model waits (47 s and 28 s on a 4-thread CPU) are cut, and the captions say so.
+**Demo video:** [`docs/demo/tabibu-demo.mp4`](docs/demo/tabibu-demo.mp4) (95 s, narrated and captioned). It was recorded from the real app with Tabibu, its QVAC models and the browser all inside a Linux network namespace with no network interface. The opening frame shows the network checks run in that sandbox. The two model waits (52 s and 31 s on a 4-thread CPU) are cut, and the captions give the real times. The narration is synthesized offline with Kokoro; it is not part of the app.
 
 ## The problem
 
@@ -141,6 +141,7 @@ Everything in this repository was written during AI Yako (24–30 October 2026).
 - [`@qvac/sdk`](https://www.npmjs.com/package/@qvac/sdk) and its model registry (Tether), Apache-2.0
 - Models listed above, under their own licences
 - [`pdfjs-dist`](https://github.com/mozilla/pdf.js) (Mozilla) for PDF text extraction, Apache-2.0
+- [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) (Apache-2.0) through [`kokoro-onnx`](https://github.com/thewh1teagle/kokoro-onnx) (MIT), used only to voice the demo video
 - [`@anthropic-ai/sdk`](https://github.com/anthropics/anthropic-sdk-typescript), used only by the cloud baseline in `eval/`, MIT
 - *Caring for the sick child in the community: Participant manual*, © WHO 2011, all rights reserved. It is downloaded from WHO at setup time and never redistributed in this repository.
 
