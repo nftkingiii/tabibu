@@ -17,7 +17,7 @@ The rules ask for a recording that shows the core AI feature working with the in
 
 ## Before recording (while online)
 
-1. `npm install` and `npm run setup`. Setup downloads about 6.1 GB of models and the WHO manual.
+1. `npm install` and `npm run setup`. Setup downloads about 5.7 GB of models and the WHO manual.
 2. Start the app once with `npm start` and open `http://localhost:4317`. Wait until the Device tab says the models are loaded.
 3. Close everything else that uses a lot of memory.
 
